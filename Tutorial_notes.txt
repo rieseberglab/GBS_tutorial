@@ -1,0 +1,37 @@
+########################
+# Notes for tutorial setup on Narval
+# Jan 2025
+#######################
+
+# permissions
+mkdir /home/celphin/scratch/GBS_workshop
+cd /home/celphin/scratch/GBS_workshop
+
+chmod -R 775 /home/celphin/scratch/GBS_workshop
+
+# probably not needed
+setfacl -m u:yueyu:rwx /folder/file1
+setfacl -m u:yueyu:rwx /home/celphin/scratch/GBS_workshop
+
+getfacl PopStats_Splitstree_March2023.tar.gz
+# file: PopStats_Splitstree_March2023.tar.gz
+# owner: celphin
+# group: celphin
+# user::rwx
+# group::rwx
+# other::r-x
+
+#-----------------------
+# Transfer relevant data over from Cedar via globus
+
+# untar the files
+tmux new-session -s GBS
+tmux attach-session -t GBS
+
+cd /home/celphin/scratch/GBS_workshop
+
+tar -xvf Admixture_March2023.tar.gz
+tar -xvf PopStats_Splitstree_March2023.tar.gz
+tar -xvf SNP_filtering_March2023.tar.gz
+tar -xvf Feb2023_dDocent.tar.gz
+

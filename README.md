@@ -13,11 +13,16 @@ This is a tutorial to walk you through how to analyze GBS data. We will cover  l
 
 # Programs used in this tutorial
 
-
+Below are a list of programs that we will use in this tutorial. 
 
 ### Perl 
 
 Perl scripts will be used to demultiplex the data
+
+### FastQC
+
+Quality check your data
+
 
 ### dDocent 
 
