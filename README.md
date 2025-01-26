@@ -5,7 +5,6 @@ author: Cassandra Elphinstone
 level: Beginner
 title: GBS tutorial
 date: Jan 2025
-subtitle: Servers, demultiplexing, references, mapping, SNP calling
 ---
 
 # Background
