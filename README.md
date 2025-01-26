@@ -1,9 +1,9 @@
 # Genotyping by sequencing tutorial
 
-authors: Cassandra Elphinstone and Yue Yu
-level: Beginner
-title: GBS tutorial
-date: Jan 2025
+authors: Cassandra Elphinstone and Yue Yu \
+level: Beginner \
+title: GBS tutorial \
+date: Jan 2025 \
 
 
 # Background
