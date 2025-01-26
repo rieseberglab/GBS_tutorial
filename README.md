@@ -164,10 +164,7 @@ Links to equations or different sections within the same document are a little b
 
 # Useful Links
 
-- [Bayesian Evolutionary Analysis with BEAST 2](http://www.beast2.org/book.html) {% cite BEAST2book2014 --file Tutorial-Template/master-refs.bib %}
-- BEAST 2 website and documentation: [http://www.beast2.org/](http://www.beast2.org/)
-- BEAST 1 website and documentation: [http://beast.bio.ed.ac.uk](http://beast.bio.ed.ac.uk)
-- Join the BEAST user discussion: [http://groups.google.com/group/beast-users](http://groups.google.com/group/beast-users) 
+- Population genomics analyses: [https://github.com/celphin/Population_genomics_Cassiope](https://github.com/celphin/Population_genomics_Cassiope)
 
 ----
 
