@@ -10,7 +10,7 @@ subtitle: Servers, demultiplexing, references, mapping, SNP calling
 
 # Background
 
-This is a tutorial to walk you through how to analyze GBS data. 
+This is a tutorial to walk you through how to analyze GBS data. We will cover  logging into the Digital Research Alliance servers, demultiplexing, references, mapping, SNP calling and plotting your data.
 
 ----
 
