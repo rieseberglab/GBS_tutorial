@@ -241,6 +241,46 @@ Cassiope_r30i.recode.vcf  # with outgroup, remove LD - fastsimcoal2, TreeMix
 # kept 349 out of 371 Individuals
 # kept 10 339 out of a possible 556807 Sites
 
+######################################
+# Make PCA GDS file
+
+# copy over PCA file
+mkdir ~/scratch/Cassiope/PopStats_Splitstree_March2023/PCA_input
+cd ~/scratch/Cassiope/PopStats_Splitstree_March2023/PCA_input
+cp ~/scratch/Cassiope/SNP_filtering_March2023/Cassiope_noMER_r10i.recode.vcf ~/scratch/Cassiope/PopStats_Splitstree_March2023/PCA_input # PopStats
+
+module load nixpkgs/16.09
+module load gcc/7.3.0
+module load r/3.6.0
+module load gdal
+module load udunits
+module load python
+export R_LIBS_USER=/home/celphin/R/x86_64-pc-linux-gnu-library/3.6/
+
+R
+
+library(SNPRelate)
+
+snpgdsVCF2GDS("./Cassiope_noMER_r10i.recode.vcf",
+              "./Cassiope_noMER_r10i.recode.gds",
+              method="biallelic.only")
+
+# Start file conversion from VCF to SNP GDS ...
+# Method: exacting biallelic SNPs
+# Number of samples: 330
+# Parsing "./Cassiope_noMER_r10i.recode.vcf" ...
+        # import 9285 variants.
+# + genotype   { Bit2 330x9285, 748.1K } *
+# Optimize the access efficiency ...
+# Clean up the fragments of GDS file:
+    # open the file './Cassiope_noMER_r10i.recode.gds' (806.1K)
+    # # of fragments: 48
+    # save to './Cassiope_noMER_r10i.recode.gds.tmp'
+    # rename './Cassiope_noMER_r10i.recode.gds.tmp' (805.8K, reduced: 336B)
+    # # of fragments: 20
+
+
+################################################
 ####################################################
 # make Plink file to be able to run Admixture
 
