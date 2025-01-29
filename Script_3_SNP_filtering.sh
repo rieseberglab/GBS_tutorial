@@ -1,6 +1,6 @@
 #####################################
 #
-# Part 2: SNP filtering (VCFtools)
+# Part 3: SNP filtering (VCFtools)
 # January 2025
 #
 # Code Contributor: Cassandra E. & Yue Y
@@ -11,14 +11,14 @@
 
 
 # This code includes the following:
-# 2.1: SNP filtering (VCFtools)
+# 3.1: SNP filtering (VCFtools)
 #      quality, minor allele counts, % found accross individuals
 #      filter out individuals with lots of missing data
 #      A script to count the number of potential genotyping errors due to low read depth
 
 
 #####################################
-#  2.1 SNP filtering (VCFtools)
+#  3.1 SNP filtering (VCFtools)
 #####################################
 
 # -- raw VCF file with 40 samples (10 individuals/populations)
@@ -55,7 +55,7 @@ tmux attach-session -t test
 
 salloc -c1 --time 03:00:00 --mem 30G --account def-rieseber #(change this to your account)
 
-cd /scratch/celphin/GBS_workshop/2_SNP_filtering
+cd /scratch/celphin/GBS_workshop/3_SNP_filtering
 
 # Copy the raw VCF file to the current directory
 cp /scratch/celphin/GBS_workshop/0_Raw_data/TotalRawSNPs_subset_40samples.vcf .

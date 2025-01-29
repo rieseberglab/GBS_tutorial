@@ -1,6 +1,6 @@
 #####################################
 #
-# Part 3: ADMIXTURE
+# Part 4: ADMIXTURE
 # January 2025
 #
 # Code Contributor: Cassandra E. & Yue Y.
@@ -9,22 +9,22 @@
 #####################################
 
 # This code includes the following:
-# 3.1: make BED files from filtered VCF files
-# 3.2: run admixture for different k values with loop
-# 3.3: bootstrap admixture results
-# 3.4: Plot ADMIXTURE result in R
+# 4.1: make BED files from filtered VCF files
+# 4.2: run admixture for different k values with loop
+# 4.3: bootstrap admixture results
+# 4.4: Plot ADMIXTURE result in R
 
 
 
 #####################################
-#  3.1 VCF -> BED
+#  4.1 VCF -> BED
 #####################################
 # make Plink file to be able to run Admixture
 
-cd /scratch/celphin/GBS_workshop/3_ADMIXTURE
+cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
 
 # Copy the filtered VCF file from STEP 3 to the current directory
-cp /scratch/celphin/GBS_workshop/2_SNP_filtering/Cassiope_noMER_r10i.recode.vcf .
+cp /scratch/celphin/GBS_workshop/3_SNP_filtering/Cassiope_noMER_r10i.recode.vcf .
 
 # convert the vcf file to Plink
 vcftools --vcf Cassiope_noMER_r10i.recode.vcf --plink --out Cassiope_noMER_r10i
@@ -38,7 +38,7 @@ bcftools query -l Cassiope_noMER_r10i.recode.vcf > sample_40_names.txt
 
 
 #####################################
-#  3.2 run ADMIXTURE
+#  4.2 run ADMIXTURE
 #####################################
 # see https://dalexander.github.io/admixture/admixture-manual.pdf for more details
 
@@ -46,7 +46,7 @@ tmux new-session -s Cassiope
 tmux attach-session -t Cassiope
 #salloc -c48 --time 03:00:00 --mem 30G --account def-rieseber
 
-cd /scratch/celphin/GBS_workshop/3_ADMIXTURE
+cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
 
 module load StdEnv/2020
 module load admixture/1.3.0
@@ -76,10 +76,10 @@ CV error (K=6): 0.42367
 
 
 #####################################
-#  3.3 run ADMIXTURE (PERMUTATION 1000) - DO NOT RUN FOR THE WORKSHOP
+#  4.3 run ADMIXTURE (PERMUTATION 1000) - DO NOT RUN FOR THE WORKSHOP
 #####################################
 
-cd /scratch/celphin/GBS_workshop/3_ADMIXTURE/bootstrap
+cd /scratch/celphin/GBS_workshop/4_ADMIXTURE/bootstrap
 
 module load StdEnv/2020
 module load admixture/1.3.0
@@ -95,10 +95,10 @@ do admixture -B1000 --cv=10 -s time -j48 -C 0.0000000001 Cassiope_noMER_r10i.bed
 
 
 #####################################
-#  3.4: Plot ADMIXTURE in R
+#  4.4: Plot ADMIXTURE in R
 #####################################
 
-cd /scratch/celphin/GBS_workshop/3_ADMIXTURE
+cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
 
 cp sample_40_names.txt /Take2
 
@@ -117,7 +117,7 @@ library(ggplot2)
 
 # set the workimg directory
 getwd()
-setwd("/scratch/celphin/GBS_workshop/3_ADMIXTURE/Take2")
+setwd("/scratch/celphin/GBS_workshop/4_ADMIXTURE/Take2")
 
 samplelist <- read_tsv("sample_40_names.txt",col_names = "sample")
 
