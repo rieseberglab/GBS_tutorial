@@ -7,19 +7,50 @@
 mkdir /home/celphin/scratch/GBS_workshop
 cd /home/celphin/scratch/GBS_workshop
 
-chmod -R 775 /home/celphin/scratch/GBS_workshop
+chmod -R 777 /home/celphin/scratch/GBS_workshop
 
 # probably not needed
-setfacl -m u:yueyu:rwx /folder/file1
-setfacl -m u:yueyu:rwx /home/celphin/scratch/GBS_workshop
+setfacl -m u:yueyu:rwx /home/celphin/scratch
 
-getfacl PopStats_Splitstree_March2023.tar.gz
-# file: PopStats_Splitstree_March2023.tar.gz
+setfacl -m u:combrink:rwx /home/celphin/scratch
+setfacl -m u:kplin:rwx /home/celphin/scratch
+setfacl -m u:jamaldin:rwx /home/celphin/scratch
+setfacl -m u:gerlinca:rwx /home/celphin/scratch
+setfacl -m u:kaedeh:rwx /home/celphin/scratch
+setfacl -m u:godfla12:rwx /home/celphin/scratch
+setfacl -m u:louislr:rwx /home/celphin/scratch
+setfacl -m u:rafaubc:rwx /home/celphin/scratch
+setfacl -m u:pawluk93:rwx /home/celphin/scratch
+setfacl -m u:natberco:rwx /home/celphin/scratch
+
+
+#------------------
+getfacl /home/celphin/scratch
+
+getfacl: Removing leading '/' from absolute path names
+# file: home/celphin/scratch
 # owner: celphin
 # group: celphin
-# user::rwx
-# group::rwx
-# other::r-x
+user::rwx
+user:rafaubc:rwx
+user:kaedeh:rwx
+user:yueyu:rwx
+user:kplin:rwx
+user:combrink:rwx
+user:louislr:rwx
+user:jamaldin:rwx
+user:natberco:rwx
+user:gerlinca:rwx
+user:pawluk93:rwx
+group::---
+mask::rwx
+other::---
+
+
+# remove user
+setfacl -x u:yueyu /home/celphin/scratch/GBS_workshop
+
+
 
 #-----------------------
 # Transfer relevant data over from Cedar via globus
