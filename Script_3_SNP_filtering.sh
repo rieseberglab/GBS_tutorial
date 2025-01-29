@@ -17,17 +17,16 @@
 #      A script to count the number of potential genotyping errors due to low read depth
 
 
+
+
 #####################################
 #  3.1 SNP filtering (VCFtools)
 #####################################
 
 # -- raw VCF file with 40 samples (10 individuals/populations)
-
-# ADD FILE PATH/FILE here!!
-
 # Note: Four populations in this VCF are: GEN, BARD, KL, PC
 
-
+cd /scratch/celphin/GBS_workshop/0_Raw_data
 
 
 # -- load vcftools/bcftools
@@ -39,8 +38,6 @@ module load bcftools/1.16
 module load plink/1.9b_6.21-x86_64
 
 
-cd /scratch/celphin/GBS_workshop/0_Raw_data
-
 # -- Count number of sites (SNPs + others)
 grep -v '^#' TotalRawSNPs_subset_40samples.vcf | wc -l
 # 559,815 Variants
@@ -48,22 +45,27 @@ grep -v '^#' TotalRawSNPs_subset_40samples.vcf | wc -l
 
 
 # ---------------------------------------------------
-#  filtering SNP 1 : start new computing session 
+#  filtering SNP step 1 : start new computing session 
 # ---------------------------------------------------
 tmux new-session -s test
 tmux attach-session -t test
 
 salloc -c1 --time 03:00:00 --mem 30G --account def-rieseber #(change this to your account)
 
+
+
 cd /scratch/celphin/GBS_workshop/3_SNP_filtering
 
 # Copy the raw VCF file to the current directory
 cp /scratch/celphin/GBS_workshop/0_Raw_data/TotalRawSNPs_subset_40samples.vcf .
 
-# ---------------------------------------------------
-#  filtering SNP 2 : HWE filter (high heterzygosity)
-# ---------------------------------------------------
+ls
 
+
+
+# ---------------------------------------------------
+#  filtering SNP step 2 : HWE filter (high heterzygosity)
+# ---------------------------------------------------
 # convert the vcf file to Plink
 vcftools --vcf TotalRawSNPs_subset_40samples.vcf --plink --out TotalRawSNPs_plink
 
@@ -92,8 +94,6 @@ wc -l HighHetSNPs_80.txt
 #2342 HighHetSNPs_80.txt
 wc -l HighHetSNPs_90.txt
 #2000 HighHetSNPs_90.txt
-# Yue Notes: Updated on Jan 27th 2025 when only 40 samples are included.
-
 
 
 # get list of SNP IDs
@@ -116,7 +116,7 @@ vcftools --vcf $VCF --exclude-positions $LIST --recode --recode-INFO-all --out T
 
 
 # ---------------------------------------------------
-#  filtering SNP 3 : Rename samples in vcf file
+#  filtering SNP step 3 : Rename samples in vcf file
 # ---------------------------------------------------
 # -- https://www.biostars.org/p/279195/ 
 
@@ -129,7 +129,7 @@ bcftools query -l TotalRawSNPs_rmhet.recode.vcf > sample_names.txt
 
 
 # ---------------------------------------------------
-#  filtering SNP 4 : Site-level Filtering
+#  filtering SNP step 4 : Site-level Filtering
 # ---------------------------------------------------
 # -- ON the following:
 
@@ -159,11 +159,8 @@ vcftools --vcf TotalRawSNPs_rmhet.recode.vcf \
 
 
 
-
-
-
 # ---------------------------------------------------
-#  filtering SNP 5 : Sample-level Filtering
+#  filtering SNP step 5 : Sample-level Filtering
 # ---------------------------------------------------
 
 # -- list the amount of missing data per individual - find indivdiuals with no reads mapped
@@ -175,11 +172,6 @@ mawk '$5 > 0.1' Cassiope_noMER.imiss | cut -f1 > lowDP.indv
 vcftools --vcf Cassiope_noMERhb.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out Cassiope_noMER_r10i
 #After filtering, kept 39 out of 40 Individuals
 #After filtering, kept 10857 out of a possible 10857 Sites
-
-
-# -- get list of all individuals left (39 left)
-vcftools --vcf Cassiope_noMER_r10i.recode.vcf --missing-indv --out Cassiope_noMER_r10i
-
 
 
 

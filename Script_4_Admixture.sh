@@ -100,7 +100,7 @@ do admixture -B1000 --cv=10 -s time -j48 -C 0.0000000001 Cassiope_noMER_r10i.bed
 
 cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
 
-cp sample_40_names.txt /Take2
+cp sample_40_names.txt /Take1
 
 module load StdEnv/2020
 module load r/4.2.1
@@ -117,7 +117,7 @@ library(ggplot2)
 
 # set the workimg directory
 getwd()
-setwd("/scratch/celphin/GBS_workshop/4_ADMIXTURE/Take2")
+setwd("/scratch/celphin/GBS_workshop/4_ADMIXTURE/Take1")
 
 samplelist <- read_tsv("sample_40_names.txt",col_names = "sample")
 

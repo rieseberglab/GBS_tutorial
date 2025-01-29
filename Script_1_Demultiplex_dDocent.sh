@@ -19,31 +19,33 @@
 #  1.1 Demultiplexing 
 #####################################
 
-# -- See GBS barcodes folder on github for PE barcodes
-cp HI*.gz /scratch/celphin/GBS_Cassiope/Dec2019_Demultiplex/
-cp CASS_Barcodes_lane* /scratch/celphin/GBS_Cassiope/Dec2019_Demultiplex/
-cp GBS2enzymedemultiplex_notrim.pl /scratch/celphin/GBS_Cassiope/Dec2019_Demultiplex/
+# -- Move the following 3 files into your working directory
+mkdir working_dir
+
+# -- File 1: fastq file (R1 and R2)
+cp sample.R1.fastq.gz working_dir
+cp sample.R2.fastq.gz working_dir
+
+# -- File 2: barcode file
+cp barcodes.txt working_dir
+
+# -- File 3: perl script
+cp GBS2enzymedemultiplex_notrim.pl working_dir
+
+
+
+
 
 # -- TMUX: allows to run in the background
 tmux new-session -s lane1
-tmux new-session -s lane2
-
 tmux attach-session -t lane1
-tmux attach-session -t lane2
 
 # -- Start interactive sessions (SALLOC) to run this step
-cd /scratch/celphin/GBS_Cassiope/Dec2019_Demultiplex/
-
+cd working_dir
 salloc -c2 --time 20:00:00 --mem 120000m --account def-rieseber
 
-# -- Lane 1
-perl GBS2enzymedemultiplex_notrim.pl CASS_Barcodes_lane1.txt HI.4977.003.lane1_343A_R1.fastq.gz HI.4977.003.lane1_343A_R2.fastq.gz ./data/L1-  
-
-# -- Lane 2
-perl GBS2enzymedemultiplex_notrim.pl CASS_Barcodes_lane2.txt HI.4962.002.lane2_566A_R1.fastq.gz HI.4962.002.lane2_566A_R2.fastq.gz ./data/L2-
-
-# Demultiplexed data found BioProject: PRJNA824830
-# https://www.ncbi.nlm.nih.gov/bioproject/?term=Cassiope%20tetragona%20subsp.%20tetragona%5Borgn%5D
+# -- Demultiplexing
+perl GBS2enzymedemultiplex_notrim.pl barcodes.txt sample.R1.fastq.gz sample.R1.fastq.gz 
 
 
 

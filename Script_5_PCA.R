@@ -32,6 +32,8 @@ module load r/4.2.1
 R
 
 # -- install packages
+# install.packages("tidyverse")
+# install.packages("ggplot2")
 #if (!require("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
 #   BiocManager::install("SNPRelate")
@@ -40,7 +42,6 @@ R
 library(tidyverse)
 library(ggplot2)
 library(SNPRelate)
-
 
 
 #####################################
@@ -113,6 +114,9 @@ head(PCA_tab_final)
 dim(PCA_tab_final)
 
 unique(PCA_tab_final$Pop)
+
+
+
 
 #####################################
 #  5.4 Plot PCA

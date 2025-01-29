@@ -17,7 +17,6 @@ module load fastqc
 # -- run FASTQC
 fastqc PopBARD_1.R1.fq.gz PopBARD_1.R2.fq.gz
 
-
 # -- Download to own computer through Globus
 
 # -- Visualize your fastQC results
