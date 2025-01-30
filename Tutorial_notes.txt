@@ -22,12 +22,11 @@ setfacl -m u:louislr:rwx /home/celphin/scratch
 setfacl -m u:rafaubc:rwx /home/celphin/scratch
 setfacl -m u:pawluk93:rwx /home/celphin/scratch
 setfacl -m u:natberco:rwx /home/celphin/scratch
-
+setfacl -m u:gopal:rwx /home/celphin/scratch
 
 #------------------
 getfacl /home/celphin/scratch
 
-getfacl: Removing leading '/' from absolute path names
 # file: home/celphin/scratch
 # owner: celphin
 # group: celphin
@@ -42,9 +41,12 @@ user:jamaldin:rwx
 user:natberco:rwx
 user:gerlinca:rwx
 user:pawluk93:rwx
+user:godfla12:rwx
+user:gopal:rwx
 group::---
 mask::rwx
 other::---
+
 
 
 # remove user
