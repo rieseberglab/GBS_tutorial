@@ -116,6 +116,7 @@ Ctrl+B d # will exit the tmux session
 sq # to view queue
 seff # to see job efficiency 
 exit # to cancel the allocation once you get it and are in it
+
 scancel -u <username> # to cancel all slurm allocations or requests
 
 #-------------------------------------------
