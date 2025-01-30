@@ -32,7 +32,7 @@ mkdir GBS_tutorial # to make a new directory
 
 tmux new-session -s GBS
 cd scratch
-cp -vr /home/celphin/scratch/GBS_workshop* .
+cp -vr /scratch/celphin/GBS_workshop* .
 #Ctrl+B d # will exit the tmux session 
 
 tmux attach-session -t GBS # reattach
