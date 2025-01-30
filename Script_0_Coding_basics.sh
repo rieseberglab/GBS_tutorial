@@ -24,7 +24,7 @@ ssh -X username@narval.computecanada.ca
 # Exploring the server
 
 ls # to list files in directory
-cd scratch # to change directories
+cd ~/scratch # to change directories
 mkdir GBS_tutorial # to make a new directory
 
 #----------------------------
