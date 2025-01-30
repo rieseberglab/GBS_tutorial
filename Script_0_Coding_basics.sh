@@ -31,7 +31,7 @@ mkdir GBS_tutorial # to make a new directory
 # Tmux or screen sessions
 
 tmux new-session -s GBS
-cd scratch
+cd ~/scratch
 cp -vr /scratch/celphin/GBS_workshop* .
 #Ctrl+B d # will exit the tmux session 
 
