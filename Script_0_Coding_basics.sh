@@ -12,6 +12,13 @@
 
 # Workshop data directory: /scratch/celphin/GBS_workshop/
 
+################################
+# Terminal
+# Windows users: https://mobaxterm.mobatek.net/download.html 
+
+# Mac/Linux
+ssh -X username@narval.computecanada.ca
+
 ####################################
 
 # Exploring the server

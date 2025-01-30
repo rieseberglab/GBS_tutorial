@@ -47,9 +47,10 @@ group::---
 mask::rwx
 other::---
 
+# change permissions to read and execute only
+chmod -R 755 /home/celphin/scratch/GBS_workshop
 
-
-# remove user
+# after tutorial remove users
 setfacl -x u:yueyu /home/celphin/scratch/GBS_workshop
 
 
