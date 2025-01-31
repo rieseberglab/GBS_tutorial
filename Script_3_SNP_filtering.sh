@@ -148,8 +148,7 @@ vcftools --vcf TotalRawSNPs_rmhet.recode.vcf \
 --max-alleles 2 \
 --max-missing 0.9 \
 --min-alleles 2 \
---thin 300 \ 
-# filteirng for LD (1 SNP to every 300bp)
+--thin 300 \ # filteirng for LD (1 SNP to every 300bp)
 --maf 0.01 \
 --recode \
 --recode-INFO-all \
