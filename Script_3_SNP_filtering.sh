@@ -149,7 +149,7 @@ vcftools --vcf TotalRawSNPs_rmhet.recode.vcf \
 --max-missing 0.9 \
 --min-alleles 2 \
 --thin 300 \ # filteirng for LD (1 SNP to every 300bp)
---maf 0.01 \
+--maf 0.05 \
 --recode \
 --recode-INFO-all \
 --out Cassiope_noMERhb
