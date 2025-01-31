@@ -55,7 +55,7 @@ setwd("/scratch/celphin/GBS_workshop/5_PCA")
 
 
 # -- Sample names 40 in filtered VCF
-samples_list <- read.table("/scratch/celphin/GBS_workshop/4_ADMIXTURE/sample_40_names.txt", header = TRUE)
+samples_list <- read.table("/scratch/celphin/GBS_workshop/4_ADMIXTURE/sample_39_names", header = TRUE)
 
 
 # -- VCF to GDS (IMPORTANT STEP)
