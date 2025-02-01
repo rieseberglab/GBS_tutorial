@@ -45,3 +45,13 @@ Libraries needed include: ggplot2,
 
 - Population genomics analyses: [https://github.com/celphin/Population_genomics_Cassiope](https://github.com/celphin/Population_genomics_Cassiope)
 
+- Genomic analysis: https://www.zoology.ubc.ca/~schluter/R/Genomics.html#SNP-calling_pipeline
+
+
+
+----
+
+# Zoom Recordings of past workshops
+2025 January 30th and 31st:
+https://drive.google.com/drive/folders/1irEqBinzt6u-6G7kAR2fvnVIeNml3aQD?usp=sharing
+
