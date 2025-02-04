@@ -56,9 +56,9 @@ Libraries needed include: ggplot2,
 https://drive.google.com/drive/folders/1irEqBinzt6u-6G7kAR2fvnVIeNml3aQD?usp=share_link)
 
 [Jan 31st recording - Part 2.1:](
-Link: https://ubc.zoom.us/rec/share/9jz05It4nh05hhfy4j8-O5_KfQfX1Hfu3meamg74wjDMXItsrb-LZ4unTXL_4FNq.wmBRbsBp11CgZH7A)
+https://ubc.zoom.us/rec/share/9jz05It4nh05hhfy4j8-O5_KfQfX1Hfu3meamg74wjDMXItsrb-LZ4unTXL_4FNq.wmBRbsBp11CgZH7A)
 Password: G?n$@=9Q
 
 [Jan 31st recording - Part 2.2:](
-Link: https://ubc.zoom.us/rec/share/Lfyy9fVSBUL4HfeBRYS4QXB3-vRMbF6P-e6LeLhZPNF87bo4ld-sM_7xSA1bVHx3.UuYcJ6UZB5xqItTo)
+https://ubc.zoom.us/rec/share/Lfyy9fVSBUL4HfeBRYS4QXB3-vRMbF6P-e6LeLhZPNF87bo4ld-sM_7xSA1bVHx3.UuYcJ6UZB5xqItTo)
 Password:*7.yVqU4
