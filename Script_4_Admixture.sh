@@ -1,6 +1,6 @@
 #####################################
 #
-# Part 4: ADMIXTURE
+# Part 4: ADMIXTURE 
 # January 2025
 #
 # Code Contributor: Cassandra E. & Yue Y.
@@ -58,7 +58,7 @@ cp Cassiope_noMER_r10i* Take1
 cp Cassiope_noMER_r10i* bootstrap/
 
 cd Take1
-for K in 1 2 3 4 5 6; \
+for K in 1 2 3 4 5 6 7 8 9; \
 do admixture --cv=10 -s time -j48 -C 0.0000000001  Cassiope_noMER_r10i.bed $K | tee log${K}.out; done
 
 
