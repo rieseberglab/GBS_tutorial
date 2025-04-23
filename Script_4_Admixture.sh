@@ -34,7 +34,7 @@ plink --file Cassiope_noMER_r10i --allow-no-sex --allow-extra-chr 0 --make-bed -
 
 #Save sample names
 module load bcftools
-bcftools query -l Cassiope_noMER_r10i.recode.vcf > sample_40_names.txt
+bcftools query -l Cassiope_noMER_r10i.recode.vcf > sample_39_names.txt
 
 
 #####################################
@@ -119,7 +119,7 @@ library(ggplot2)
 getwd()
 setwd("/scratch/celphin/GBS_workshop/4_ADMIXTURE/Take1")
 
-samplelist <- read_tsv("sample_40_names.txt",col_names = "sample")
+samplelist <- read_tsv("sample_39_names.txt",col_names = "sample")
 
 all_data <- tibble(sample=character(),
                    k=numeric(),

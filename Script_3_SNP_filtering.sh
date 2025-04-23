@@ -139,7 +139,7 @@ bcftools query -l TotalRawSNPs_rmhet.recode.vcf > sample_names.txt
 # -> missing data < 90%
 # -> monomorphic
 # -> LD
-# -> minor allele freq of 0.01 (0.01 * 40 * 2 = 8 alleles)
+# -> minor allele freq of 0.05 (0.05 * 40 * 2 = 4 alleles)
 
 # -- Code
 vcftools --vcf TotalRawSNPs_rmhet.recode.vcf \
@@ -148,9 +148,8 @@ vcftools --vcf TotalRawSNPs_rmhet.recode.vcf \
 --max-alleles 2 \
 --max-missing 0.9 \
 --min-alleles 2 \
---thin 300 \ 
-# filteirng for LD (1 SNP to every 300bp)
---maf 0.01 \
+--thin 300 \ # filteirng for LD (1 SNP to every 300bp)
+--maf 0.05 \
 --recode \
 --recode-INFO-all \
 --out Cassiope_noMERhb
