@@ -1,7 +1,7 @@
 
 #####################################
 #
-# Part 5: PCA & Plotting in R
+# Part 6: PCA & Plotting in R
 # January 2025
 #
 # Code Contributor: Cassandra E. & Yue Y.
@@ -11,15 +11,15 @@
 
 
 # This code includes the following:
-# 5.1: Load R pkgs
-# 5.2: Load data for plotting
-# 5.3: Run PCA
-# 5.4: Plot PCA
+# 6.1: Load R pkgs
+# 6.2: Load data for plotting
+# 6.3: Run PCA
+# 6.4: Plot PCA
 
 
 
 #####################################
-#  5.1 Load R pkgs
+#  6.1 Load R pkgs
 #####################################
 
 cd /scratch/celphin/GBS_workshop/5_PCA
@@ -45,7 +45,7 @@ library(SNPRelate)
 
 
 #####################################
-#  5.2 Load data for plotting
+#  6.2 Load data for plotting
 #####################################
 
 # -- Change this to your folder pathway 
@@ -78,7 +78,7 @@ snpset.id <- unlist(snpset_pruned)
 
 
 #####################################
-#  5.3 Run PCA
+#  6.3 Run PCA
 #####################################
 
 
@@ -119,7 +119,7 @@ unique(PCA_tab_final$Pop)
 
 
 #####################################
-#  5.4 Plot PCA
+#  6.4 Plot PCA
 #####################################
 
 

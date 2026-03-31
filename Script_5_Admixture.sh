@@ -1,6 +1,6 @@
 #####################################
 #
-# Part 4: ADMIXTURE 
+# Part 5: ADMIXTURE 
 # January 2025
 #
 # Code Contributor: Cassandra E. & Yue Y.
@@ -9,15 +9,15 @@
 #####################################
 
 # This code includes the following:
-# 4.1: make BED files from filtered VCF files
-# 4.2: run admixture for different k values with loop
-# 4.3: bootstrap admixture results
-# 4.4: Plot ADMIXTURE result in R
+# 5.1: make BED files from filtered VCF files
+# 5.2: run admixture for different k values with loop
+# 5.3: bootstrap admixture results
+# 5.4: Plot ADMIXTURE result in R
 
 
 
 #####################################
-#  4.1 VCF -> BED
+#  5.1 VCF -> BED
 #####################################
 # make Plink file to be able to run Admixture
 
@@ -38,7 +38,7 @@ bcftools query -l Cassiope_noMER_r10i.recode.vcf > sample_39_names.txt
 
 
 #####################################
-#  4.2 run ADMIXTURE
+#  5.2 run ADMIXTURE
 #####################################
 # see https://dalexander.github.io/admixture/admixture-manual.pdf for more details
 
@@ -76,7 +76,7 @@ CV error (K=6): 0.42367
 
 
 #####################################
-#  4.3 run ADMIXTURE (PERMUTATION 1000) - DO NOT RUN FOR THE WORKSHOP
+#  5.3 run ADMIXTURE (PERMUTATION 1000) - DO NOT RUN FOR THE WORKSHOP
 #####################################
 
 cd /scratch/celphin/GBS_workshop/4_ADMIXTURE/bootstrap
@@ -95,7 +95,7 @@ do admixture -B1000 --cv=10 -s time -j48 -C 0.0000000001 Cassiope_noMER_r10i.bed
 
 
 #####################################
-#  4.4: Plot ADMIXTURE in R
+#  5.4: Plot ADMIXTURE in R
 #####################################
 
 cd /scratch/celphin/GBS_workshop/4_ADMIXTURE

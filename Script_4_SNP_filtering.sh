@@ -1,6 +1,6 @@
 #####################################
 #
-# Part 3: SNP filtering (VCFtools)
+# Part 4: SNP filtering (VCFtools)
 # January 2025
 #
 # Code Contributor: Cassandra E. & Yue Y
@@ -11,7 +11,7 @@
 
 
 # This code includes the following:
-# 3.1: SNP filtering (VCFtools)
+# 4.1: SNP filtering (VCFtools)
 #      quality, minor allele counts, % found accross individuals
 #      filter out individuals with lots of missing data
 #      A script to count the number of potential genotyping errors due to low read depth
@@ -20,7 +20,7 @@
 
 
 #####################################
-#  3.1 SNP filtering (VCFtools)
+#  4.1 SNP filtering (VCFtools)
 #####################################
 
 # -- raw VCF file with 40 samples (10 individuals/populations)
