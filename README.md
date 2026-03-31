@@ -1,9 +1,10 @@
 # Genotyping by sequencing tutorial
 
-authors: Cassandra Elphinstone and Yue Yu \
-level: Beginner \
-title: GBS tutorial \
-date: Jan 2025 
+Authors: Yue Yu, Vincent Fetterley & Cassandra Elphinstone \
+Level: Beginner \
+Title: GBS tutorial \
+Initial created date: Jan 2025 
+Updated date: March 2026
 
 # Background
 
@@ -13,7 +14,7 @@ This is a tutorial to walk you through how to analyze GBS data. We will cover  l
 
 # Programs used in this tutorial
 
-Below are a list of programs that we will use in this tutorial. 
+Below are a list of programs that we will use in this tutorial
 
 ### Perl 
 
@@ -23,6 +24,17 @@ Perl scripts will be used to demultiplex the data
 
 Quality check your data
 
+### bwa-mem2
+
+Software package for mapping DNA sequences against a large reference genome
+
+### GATK
+
+A genomic analysis toolkit focused on variant discovery
+
+### bcftools
+
+BCFtools is a set of utilities that manipulate variant calls in the Variant Call Format (VCF) and its binary counterpart BCF
 
 ### dDocent 
 
