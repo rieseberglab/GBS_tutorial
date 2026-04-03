@@ -1,3 +1,59 @@
+
+########################
+# Notes for tutorial setup on Narval
+# April 2026
+#######################
+
+# Give acces to users
+
+setfacl -m u:vfett:x /home/yueyu 
+setfacl -m u:vfett:x /home/yueyu/scratch
+setfacl -m u:vfett:rwx /home/yueyu/scratch/GBS_workshop
+
+# with x will not read my files in parent dir, but allow to pass through
+# rwx will allow access to the GBS_workshop dir
+
+
+getfacl /home/yueyu
+getfacl /home/yueyu/scratch
+getfacl /home/yueyu/scratch/GBS_workshop
+
+
+# file: home/yueyu
+# owner: yueyu
+# group: yueyu
+user::rwx
+user:vfett:--x
+group::---
+mask::--x
+other::---
+
+
+# file: home/yueyu/scratch
+# owner: yueyu
+# group: yueyu
+user::rwx
+user:vfett:--x
+group::---
+mask::--x
+other::---
+
+
+# file: home/yueyu/scratch/GBS_workshop
+# owner: yueyu
+# group: yueyu
+user::rwx
+user:vfett:rwx
+group::r-x
+mask::rwx
+other::---
+
+
+
+
+
+
+
 ########################
 # Notes for tutorial setup on Narval
 # Jan 2025
