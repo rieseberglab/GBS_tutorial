@@ -9,7 +9,6 @@
 setfacl -m u:vfett:x /home/yueyu 
 setfacl -m u:vfett:x /home/yueyu/scratch
 setfacl -m u:vfett:rwx /home/yueyu/scratch/GBS_workshop
-
 # with x will not read my files in parent dir, but allow to pass through
 # rwx will allow access to the GBS_workshop dir
 
