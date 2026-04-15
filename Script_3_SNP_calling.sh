@@ -59,7 +59,7 @@ R2="${SAMPLE}_paired_R2.fastq.gz"
 OUTPUT_BAM="/home/username/scratch/GBS_workshop/BAM_output/${SAMPLE}.callonPRAHap2.sort.bam"
 
 # BWA-MEM2 & samtools sort
-#bwa-mem2 index $REF # index the reference genome
+bwa-mem2 index $REF # index the reference genome
 
 bwa-mem2 mem -t 8 -R "@RG\tID:${SAMPLE}\tSM:${SAMPLE}\tPL:illumina" \
     "$REF" "$R1" "$R2" | \
