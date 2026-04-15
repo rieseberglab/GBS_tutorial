@@ -48,6 +48,8 @@ cd ~/scratch/GBS_workshop/3_SNP_calling/fastq
 # Define variables
 REF="/home/username/scratch/GBS_workshop/FASTA/praecox2.fasta"  # reference genome FASTA
 
+bwa-mem2 index $REF # index the reference genome
+
 # Extract sample name from all files
 i=$(ls *paired_R1.fastq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1) 
 SAMPLE=$(echo $i | cut -d "_" -f 1-2)
@@ -59,7 +61,6 @@ R2="${SAMPLE}_paired_R2.fastq.gz"
 OUTPUT_BAM="/home/username/scratch/GBS_workshop/BAM_output/${SAMPLE}.callonPRAHap2.sort.bam"
 
 # BWA-MEM2 & samtools sort
-bwa-mem2 index $REF # index the reference genome
 
 bwa-mem2 mem -t 8 -R "@RG\tID:${SAMPLE}\tSM:${SAMPLE}\tPL:illumina" \
     "$REF" "$R1" "$R2" | \
