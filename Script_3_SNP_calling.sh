@@ -48,7 +48,7 @@ cd ~/scratch/GBS_workshop/3_SNP_calling/fastq
 # Define variables
 REF="/home/username/scratch/GBS_workshop/FASTA/praecox2.fasta"  # reference genome FASTA
 
-bwa-mem2 index $REF # index the reference genome
+# bwa-mem2 index $REF # index the reference genome
 
 # Extract sample name from all files
 i=$(ls *paired_R1.fastq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1) 
