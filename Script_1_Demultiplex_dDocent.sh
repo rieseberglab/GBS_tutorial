@@ -20,6 +20,7 @@
 #####################################
 
 # -- Move the following 3 files into your working directory
+cd ~/scratch
 mkdir working_dir
 
 # -- File 1: fastq file (R1 and R2)

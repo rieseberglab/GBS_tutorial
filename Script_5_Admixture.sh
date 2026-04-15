@@ -21,15 +21,16 @@
 #####################################
 # make Plink file to be able to run Admixture
 
-cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
+cd ~/scratch/GBS_workshop/5_ADMIXTURE/
 
 # Copy the filtered VCF file from STEP 3 to the current directory
-cp /scratch/celphin/GBS_workshop/3_SNP_filtering/Cassiope_noMER_r10i.recode.vcf .
+# cp /scratch/celphin/GBS_workshop/3_SNP_filtering/Cassiope_noMER_r10i.recode.vcf .
 
 # convert the vcf file to Plink
 vcftools --vcf Cassiope_noMER_r10i.recode.vcf --plink --out Cassiope_noMER_r10i
 
 #MAKE A BED FILE 
+module load htslib/1.10.2
 plink --file Cassiope_noMER_r10i --allow-no-sex --allow-extra-chr 0 --make-bed --out Cassiope_noMER_r10i
 
 #Save sample names
@@ -46,7 +47,7 @@ tmux new-session -s Cassiope
 tmux attach-session -t Cassiope
 #salloc -c48 --time 03:00:00 --mem 30G --account def-rieseber
 
-cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
+cd ~/scratch/GBS_workshop/5_ADMIXTURE
 
 module load StdEnv/2020
 module load admixture/1.3.0
@@ -63,7 +64,7 @@ do admixture --cv=10 -s time -j48 -C 0.0000000001  Cassiope_noMER_r10i.bed $K | 
 
 
 #to get the CV errors and see which K value is the best model
-grep -h CV log*out
+grep -h CV log*
 
 # Take 1
 CV error (K=1): 0.54249
@@ -98,9 +99,9 @@ do admixture -B1000 --cv=10 -s time -j48 -C 0.0000000001 Cassiope_noMER_r10i.bed
 #  5.4: Plot ADMIXTURE in R
 #####################################
 
-cd /scratch/celphin/GBS_workshop/4_ADMIXTURE
+cd ~/scratch/GBS_workshop/5_ADMIXTURE
 
-cp sample_40_names.txt /Take1
+cp sample_39_names.txt Take1/
 
 module load StdEnv/2020
 module load r/4.2.1
@@ -113,11 +114,11 @@ R
 
 library(tidyverse)
 library(ggplot2)
-
+get
 
 # set the workimg directory
 getwd()
-setwd("/scratch/celphin/GBS_workshop/4_ADMIXTURE/Take1")
+setwd("~/scratch/GBS_workshop/5_ADMIXTURE/Take1")
 
 samplelist <- read_tsv("sample_39_names.txt",col_names = "sample")
 

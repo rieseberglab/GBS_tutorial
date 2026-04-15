@@ -3,7 +3,7 @@
 # Part 4: SNP filtering (VCFtools)
 # January 2025
 #
-# Code Contributor: Cassandra E. & Yue Y
+# Code Contributor: Cassandra E, Yue Y & Vincent F
 # Biodiversity Research Center, UBC
 #
 #####################################
@@ -30,15 +30,18 @@
 #  Step 2: Extract SNPs
 #--------------------------
 
+
+cd ~/scratch/GBS_workshop/4_SNP_filtering
 nano Filter_Step1.sh
+
 # ----------- Filter_Step1.sh ---------
+
+
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac 
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=10G
 #SBATCH --time=2:00:00
-
-cd /home/yueyu/scratch/GBS/VCF_DEB_FILTERED
 
 module load StdEnv/2023
 module load gatk/4.6.1.0
@@ -47,13 +50,15 @@ unset JAVA_TOOL_OPTIONS
 
 #SNP
 gatk --java-options "-Xmx8g" SelectVariants \
-  -V /home/yueyu/scratch/GBS/VCF_DEB/Raw_VCF.vcf.gz \
+  -V PRA_final_raw_v20250414.vcf.gz \
   --select-type-to-include SNP \
   --exclude-filtered \
   -O SNP_FILTERED.vcf.gz
+
+
 # ----------- Filter_Step1.sh (END)---------
 
-
+sbatch Filter_Step1.sh
 
 
 #--------------------------
@@ -144,14 +149,17 @@ dev.off()
 #--------------------------
 
 nano Filter_Step2.sh
+
 # ----------- Filter_Step2.sh ---------
+
+
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=10G
 #SBATCH --time=1:00:00
 
-cd /home/yueyu/scratch/GBS/VCF_DEB_FILTERED
+cd ~/scratch/GBS_workshop/4_SNP_filtering
 
 module load StdEnv/2023
 module load gatk/4.6.1.0
@@ -174,8 +182,10 @@ gatk --java-options "-Xmx8g" SelectVariants \
   --exclude-filtered \
   -O SNP_INFO_FILTERED.vcf.gz
 
+
 # ----------- Filter_Step2.sh (END)---------
 
+sbatch Filter_Step2.sh
 
 # --------------------
 # Step 5: Check per sample DP and GQ before sample-level filters
@@ -183,11 +193,56 @@ gatk --java-options "-Xmx8g" SelectVariants \
 
 # Example
 # ===========
-#  (Genotype) GQ, mean ~ 58 
+#  (Genotype) GQ, mean ~ 15
 # ===========
 # ===========
-#  (Genotype) DP, mean ~ 22
+#  (Genotype) DP, mean ~ 9
 # ===========
+
+nano GQ_DP_check.sh
+
+# ----------- GQ_DP_check.sh ---------
+
+#!/bin/bash
+#SBATCH --account=def-prof          # need to set for your PI's account
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=10G
+#SBATCH --time=1:00:00
+
+cd ~/scratch/GBS_workshop/4_SNP_filtering
+module load StdEnv/2023
+module load gatk/4.6.1.0
+unset JAVA_TOOL_OPTIONS
+
+# Extract DP and GQ per sample per site into a table
+gatk --java-options "-Xmx8g" VariantsToTable \
+    -V SNP_INFO_FILTERED.vcf.gz \
+    -F CHROM -F POS \
+    -GF DP -GF GQ \
+    -O sample_DP_GQ.txt
+
+# ----------- GQ_DP_check.sh (END) ---------
+
+sbatch GQ_DP_check.sh
+
+R
+df <- read.table("sample_DP_GQ.txt", header=TRUE, sep="\t")
+library(tidyverse)
+
+dp_summary <- df %>% select(ends_with(".DP")) %>%
+  summarise(across(everything(), list(
+    mean   = \(x) mean(x, na.rm=TRUE),
+    median = \(x) median(x, na.rm=TRUE)
+  )))
+
+gq_summary <- df %>% select(ends_with(".GQ")) %>%
+  summarise(across(everything(), list(
+    mean   = \(x) mean(x, na.rm=TRUE),
+    median = \(x) median(x, na.rm=TRUE)
+  )))
+
+print(dp_summary)
+print(gq_summary)
 
 
 # --------------------
@@ -195,16 +250,18 @@ gatk --java-options "-Xmx8g" SelectVariants \
 # --------------------
 
 
-
 nano Filter_Step3.sh
+
 # ----------- Filter_Step3.sh ---------
+
+
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=20G
 #SBATCH --time=2:00:00
 
-cd /home/yueyu/scratch/GBS/VCF_DEB_FILTERED
+cd ~/scratch/GBS_workshop/4_SNP_filtering
 
 module load StdEnv/2020
 module load gcc/9.3.0
@@ -220,21 +277,28 @@ bcftools filter \
 
 tabix -p vcf INFO_GENO_FILTERED_single_sep.vcf.gz
 
+
 # ----------- Filter_Step3.sh (END)---------
+
+sbatch Filter_Step3.sh
 
 
 # --------------------
 # Step 7: FILTER MAX MISSINGNESS (site level)
 # --------------------
+
 nano Filter_Step4.sh
+
 # ----------- Filter_Step4.sh ---------
+
+
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=20G
 #SBATCH --time=1:00:00
 
-cd /home/yueyu/scratch/GBS/VCF_DEB_FILTERED
+cd ~/scratch/GBS_workshop/4_SNP_filtering
 
 module load StdEnv/2023
 module load gatk/4.6.1.0
@@ -242,23 +306,27 @@ module load gatk/4.6.1.0
 unset JAVA_TOOL_OPTIONS
 
 gatk --java-options "-Xmx18g" SelectVariants \
-            -V SNP_INFO_GENO_FILTERED_single_sep.vcf.gz \
+            -V INFO_GENO_FILTERED_single_sep.vcf.gz \
             --remove-unused-alternates \
             --restrict-alleles-to BIALLELIC \
             --max-nocall-fraction 0.3 \
             -O SNP_INFO_GENO_BI_NOCALL03_FILTERED.vcf.gz
 
+
 # ----------- Filter_Step4.sh (END)---------
+
+sbatch Filter_Step4.sh
 
 
 # --------------------
 # Step 8: REMOVE SAMPLES THAT ARE OF LOW COVERAGE -- YES, do it after filter for missing rate (of the sites)
 # -------------------- 
 
+
 module load StdEnv/2020 
 module load vcftools/0.1.16
 
-cd /home/yueyu/scratch/GBS/VCF_DEB_FILTERED
+cd ~/scratch/GBS_workshop/4_SNP_filtering
 vcftools --gzvcf SNP_INFO_GENO_BI_NOCALL03_FILTERED.vcf.gz --missing-indv --out sample_missing_ratio
 awk '$5 > 0.3' sample_missing_ratio.imiss
 
@@ -270,14 +338,17 @@ awk '$5 > 0.3' sample_missing_ratio.imiss
 
 
 nano Filter_Step5.sh
+
 # ----------- Filter_Step5.sh ---------
+
+
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=5G
 #SBATCH --time=2:00:00
 
-cd /home/yueyu/scratch/GBS/VCF_DEB_FILTERED
+cd ~/scratch/GBS_workshop/4_SNP_filtering
 
 module load StdEnv/2020
 module load gcc/9.3.0
@@ -300,7 +371,10 @@ bcftools view \
 
 tabix -p vcf SNP_INFO_GENO_BI_NOCALL03_FILTERED_RECODED_CLEANED_AF003.vcf.gz
 
+
 # ----------- Filter_Step5.sh (END) ---------
+
+sbatch Filter_Step5.sh
 
 # Check number filtered SNPs left
 bcftools view -H SNP_INFO_GENO_BI_NOCALL03_FILTERED_RECODED_CLEANED_AF003.vcf.gz | wc -l

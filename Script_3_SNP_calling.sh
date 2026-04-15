@@ -3,7 +3,7 @@
 # Part 3: SNP Calling
 # March 2026
 #
-# Code Contributor: Yue Y & Vincent Fetterley
+# Code Contributor: Yue Y & Vincent F
 # Biodiversity Research Center, UBC
 #
 #####################################
@@ -24,11 +24,15 @@
 #  3.1 bwa-mem2: fastq -> BAM
 #####################################
 
+cd ~/scratch/GBS_workshop
+mkdir BAM_output
 
 nano run_BWA.sh
+
 # -------------- run_BWA.sh --------------------
+
 #!/bin/bash
-#SBATCH --account=def-rieseber
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=8
 #SBATCH --mem-per-cpu=8G  # each core 8G, total 8G * 8 = 64G
 #SBATCH --time=04:00:00
@@ -39,10 +43,10 @@ module load bwa-mem2/2.2.1
 module load gcc/12.3
 module load samtools/1.20
 
-/home/yueyu/scratch/GBS_workshop/3_SNP_calling/fastq
+cd ~/scratch/GBS_workshop/3_SNP_calling/fastq
 
 # Define variables
-REF="/home/yueyu/scratch/GBS_workshop/FASTA/praecox2.fasta"  # refernce genome FASTA
+REF="/home/username/scratch/GBS_workshop/FASTA/praecox2.fasta"  # reference genome FASTA
 
 # Extract sample name from all files
 i=$(ls *paired_R1.fastq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1) 
@@ -52,9 +56,11 @@ R1="${SAMPLE}_paired_R1.fastq.gz"
 R2="${SAMPLE}_paired_R2.fastq.gz"
 
 # OutputBAM
-OUTPUT_BAM="BAM_output/${SAMPLE}.callonPRAHap2.sort.bam"
+OUTPUT_BAM="/home/username/scratch/GBS_workshop/BAM_output/${SAMPLE}.callonPRAHap2.sort.bam"
 
 # BWA-MEM2 & samtools sort
+#bwa-mem2 index $REF # index the reference genome
+
 bwa-mem2 mem -t 8 -R "@RG\tID:${SAMPLE}\tSM:${SAMPLE}\tPL:illumina" \
     "$REF" "$R1" "$R2" | \
 samtools sort -@ 8 -m 7G -o "$OUTPUT_BAM"
@@ -65,9 +71,11 @@ samtools sort -@ 8 -m 7G -o "$OUTPUT_BAM"
 
 # -------------- run_BWA.sh (END) --------------------
 
+sbatch run_BWA.sh
+
 
 # -- Index bam file --> bam.bai
-cd /home/yueyu/scratch/GBS/BAM_output
+cd ~/scratch/GBS_workshop/BAM_output
 module load samtools/1.20
 
 for bam in *.sort.bam; do
@@ -81,11 +89,13 @@ done
 #  3.2 HaplotypeCaller: BAM -> g.vcf
 #####################################
 
-
+cd ~/scratch/GBS_workshop
 nano run_HapCaller.sh
+
 #----------------  run_HapCaller.sh (start)  ----------------
+
 #!/bin/bash
-#SBATCH --account=def-rieseber
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --time=06:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=30G
@@ -94,19 +104,24 @@ nano run_HapCaller.sh
 module load StdEnv/2020
 module load gatk/4.2.4.0
 
-cd /home/yueyu/scratch/GBS/BAM_output
+mkdir ~/scratch/GBS_workshop/GVCF_output
+cd ~/scratch/GBS_workshop/BAM_output
 
 
 # Define variables
-REF="/home/yueyu/scratch/GBS_workshop/FASTA/praecox2.fasta"  # refernce genome FASTA
+REF="/home/username/scratch/GBS_workshop/FASTA/praecox2.fasta"  # reference genome FASTA
 
 i=$(ls *sort.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 SAMPLE=$(echo $i | cut -d "." -f 1) 
 
+#gatk CreateSequenceDictionary \
+#    -R /home/scratch/GBS_workshop/FASTA/praecox2.fasta \
+#    -O /home/username/scratch/GBS_workshop/FASTA/praecox2.dict
+
 gatk --java-options "-Xmx28G" HaplotypeCaller \
 	 -R ${REF} \
 	 -I ${SAMPLE}.callonPRAHap2.sort.bam \
-	 -O /home/yueyu/scratch/GBS/GVCF_output/${SAMPLE}.callonPRAHap2.g.vcf \
+	 -O /home/username/scratch/GBS_workshop/GVCF_output/${SAMPLE}.callonPRAHap2.g.vcf \
 	 -ERC GVCF \
 	 --max-alternate-alleles 3 \
 	 --pcr-indel-model AGGRESSIVE \
@@ -114,19 +129,19 @@ gatk --java-options "-Xmx28G" HaplotypeCaller \
 
 #----------------  run_HapCaller.sh (end)  ----------------
 
+sbatch run_HapCaller.sh
+
+
+
 
 
 #####################################
 #  3.3 GenomicDBImport: g.vcf -> database
 #####################################
 
-
-#---  Move all GVCF to the same folder
-cd /home/yueyu/scratch/GBS/GVCF_output
+cd ~/scratch/GBS_workshop/GVCF_output
 
 #---  Create sample map (required to create the DBI database)
-cd /home/yueyu/scratch/GBS/GVCF_output
-
 for i in *.g.vcf; do
     name=$(echo "$i" | cut -d "." -f 1)
     echo -e "$name\t$i" >> sample_names.txt
@@ -143,21 +158,27 @@ head sample_names.txt
 #                 |------> ChrXX
 
 
-cd /home/yueyu/scratch/GBS/GVCF_output
+cd ~/scratch/GBS_workshop/GVCF_output
+
+
+#######################################
+# BLOCK 1 #
+#######################################
+
 
 for i in $(seq -w 01 17)
 do
   cat <<EOL > PRA_Chr${i}_makeDB.sh
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --time=10:00:00
-#SBATCH --cpus-per-task=3
+SBATCH --cpus-per-task=3
 #SBATCH --mem-per-cpu=10G
 
 module load StdEnv/2020
 module load gatk/4.2.4.0
 
-cd /home/yueyu/scratch/GBS/GVCF_output
+cd ~/scratch/GBS_workshop/GVCF_output
 
 gatk --java-options "-Xmx48g" GenomicsDBImport \\
     --genomicsdb-workspace-path PRA_CHROM$i \\
@@ -169,13 +190,22 @@ EOL
 
   chmod +x PRA_Chr${i}_makeDB.sh
 done
+    
+#####------END BLOCK 1-----#############
 
 
 # -- Make final run script
+
+########################################
+# BLOCK 2 #
+########################################
+
 for i in {01..17};
 do 
     echo "sbatch PRA_Chr${i}_makeDB.sh" >> run_DBI_byCHROM.sh
 done
+
+#####------END BLOCK 2-----#############
 
 
 #-- Run in parallel 
@@ -183,9 +213,11 @@ cat run_DBI_byCHROM.sh | parallel -j 17
 
 
 #-- Check status
-for i in {30639408..30639424};do
+for i in {59222375..59222391};do # change according to your JOBIDs
     seff $i | grep State >> check_PRA_makeDB.txt
 done
+    
+cat check_PRA_makeDB.txt
 
 #-- Remove files
 rm slurm-*
@@ -199,13 +231,13 @@ rm check_PRA_makeDB.txt
 #  3.4 GenotypeGVCF:  database -> VCF
 #####################################
 
-cd /home/yueyu/scratch/ALL_GBS_call_on_PRA/VCF
+cd ~/scratch/GBS_workshop/GVCF_output
 
 for i in $(seq -w 01 17)
 do
   cat <<EOL > PRA_Chr${i}_genotypeVCF.sh
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --time=10:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=5G
@@ -213,12 +245,12 @@ do
 module load StdEnv/2020
 module load gatk/4.2.4.0
 
-cd /home/yueyu/scratch/ALL_GBS_call_on_PRA/G_VCF_ALL_merged
+cd ~/scratch/GBS_workshop/GVCF_output
 
 gatk --java-options "-Xmx90g" GenotypeGVCFs \\
-     -R praecox2.fasta \\
+     -R ../FASTA/praecox2.fasta \\
      -V gendb://PRA_CHROM$i \\
-     -O /home/yueyu/scratch/ALL_GBS_call_on_PRA/VCF/PRA_Chr$i.vcf.gz
+     -O PRA_Chr$i.vcf.gz
 EOL
 
   chmod +x PRA_Chr${i}_genotypeVCF.sh
@@ -250,8 +282,9 @@ cat run_PRA_GT_byCHR.sh | parallel -j 17
 nano run_PRA_vcf_merge.sh
 
 #----------  vcf_merge.sh  ---------- 
+
 #!/bin/bash
-#SBATCH --account=rrg-rieseber-ac
+#SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --time=1:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=10G
@@ -262,7 +295,7 @@ module load bcftools/1.16
 module load tabix/0.2.6
 
 
-cd /home/yueyu/scratch/ALL_GBS_call_on_PRA/VCF
+cd ~/scratch/GBS_workshop/GVCF_output
 
 bcftools concat \
   PRA_Chr01.vcf.gz \
@@ -282,14 +315,16 @@ bcftools concat \
   PRA_Chr15.vcf.gz \
   PRA_Chr16.vcf.gz \
   PRA_Chr17.vcf.gz \
-  -O z > cd /home/yueyu/scratch/ALL_GBS_call_on_PRA/VCF/Raw_VCF.vcf.gz
+  -O z > Raw_VCF.vcf.gz
 
 tabix -p vcf Raw_VCF.vcf.gz
 
 #----------  vcf_merge.sh  (END) ---------- 
 
+sbatch run_PRA_vcf_merge.sh
+
 # -- Check number of SNPs in the raw VCF file
-bcftools view -H Raw_VCF.vcf.gz | wc -l 
+bcftools view -H Raw_VCF.vcf.gz | wc -l #477912
 
 
 # END
