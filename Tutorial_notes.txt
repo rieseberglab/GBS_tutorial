@@ -4,18 +4,59 @@
 # April 2026
 #######################
 
-# Give acces to users
+# Give acces to Vincent
 
 setfacl -m u:vfett:x /home/yueyu 
 setfacl -m u:vfett:x /home/yueyu/scratch
-setfacl -m u:vfett:rwx /home/yueyu/scratch/GBS_workshop
+setfacl -R -m u:vfett:rwx /home/yueyu/scratch/GBS_workshop
+
 # with x will not read my files in parent dir, but allow to pass through
 # rwx will allow access to the GBS_workshop dir
 
 
+# Give access to all other pariticpants
+setfacl -m u:creno:x /home/yueyu 
+setfacl -m u:creno:x /home/yueyu/scratch
+setfacl -R -m u:creno:rwx /home/yueyu/scratch/GBS_workshop
+
+
+setfacl -m u:esun:x /home/yueyu 
+setfacl -m u:esun:x /home/yueyu/scratch
+setfacl -R -m u:esun:rwx /home/yueyu/scratch/GBS_workshop
+
+
+setfacl -m u:witold:x /home/yueyu 
+setfacl -m u:witold:x /home/yueyu/scratch
+setfacl -R -m u:witold:rwx /home/yueyu/scratch/GBS_workshop
+
+setfacl -m u:kaligua:x /home/yueyu 
+setfacl -m u:kaligua:x /home/yueyu/scratch
+setfacl -R -m u:kaligua:rwx /home/yueyu/scratch/GBS_workshop
+
+
+setfacl -m u:katiechu:x /home/yueyu 
+setfacl -m u:katiechu:x /home/yueyu/scratch
+setfacl -R -m u:katiechu:rwx /home/yueyu/scratch/GBS_workshop
+
+
+setfacl -m u:natberco:x /home/yueyu 
+setfacl -m u:natberco:x /home/yueyu/scratch
+setfacl -R -m u:natberco:rwx /home/yueyu/scratch/GBS_workshop
+
+setfacl -m u:kaligua:x /home/yueyu 
+setfacl -m u:kaligua:x /home/yueyu/scratch
+setfacl -R -m u:kaligua:rwx /home/yueyu/scratch/GBS_workshop
+
+
+
+
+
+# ---- check if access is given
+
+
 getfacl /home/yueyu
 getfacl /home/yueyu/scratch
-getfacl /home/yueyu/scratch/GBS_workshop
+
 
 
 # file: home/yueyu
@@ -46,6 +87,9 @@ user:vfett:rwx
 group::r-x
 mask::rwx
 other::---
+
+
+
 
 
 
