@@ -35,7 +35,7 @@ nano run_BWA.sh
 #SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --cpus-per-task=8
 #SBATCH --mem-per-cpu=8G  # each core 8G, total 8G * 8 = 64G
-#SBATCH --time=04:00:00
+#SBATCH --time=01:00:00
 #SBATCH --array=1-10  # number of samples
 
 module load StdEnv/2023
@@ -97,7 +97,7 @@ nano run_HapCaller.sh
 
 #!/bin/bash
 #SBATCH --account=def-prof # need to set for your PI's account
-#SBATCH --time=06:00:00
+#SBATCH --time=02:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=30G
 #SBATCH --array=1-10       # number of samples
@@ -172,7 +172,7 @@ do
   cat <<EOL > PRA_Chr${i}_makeDB.sh
 #!/bin/bash
 #SBATCH --account=def-prof # need to set for your PI's account
-#SBATCH --time=10:00:00
+#SBATCH --time=2:00:00
 SBATCH --cpus-per-task=3
 #SBATCH --mem-per-cpu=10G
 
@@ -239,7 +239,7 @@ do
   cat <<EOL > PRA_Chr${i}_genotypeVCF.sh
 #!/bin/bash
 #SBATCH --account=def-prof # need to set for your PI's account
-#SBATCH --time=10:00:00
+#SBATCH --time=2:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=5G
 

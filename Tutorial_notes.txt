@@ -41,12 +41,17 @@ setfacl -R -m u:katiechu:rwx /home/yueyu/scratch/GBS_workshop
 
 setfacl -m u:natberco:x /home/yueyu 
 setfacl -m u:natberco:x /home/yueyu/scratch
-setfacl -R -m u:natberco:rwx /home/yueyu/scratch/GBS_workshop
+setfacl -R -m u:natberco:rwx /ho
 
-setfacl -m u:kaligua:x /home/yueyu 
-setfacl -m u:kaligua:x /home/yueyu/scratch
-setfacl -R -m u:kaligua:rwx /home/yueyu/scratch/GBS_workshop
 
+setfacl -m u:sp35:x /home/yueyu 
+setfacl -m u:sp35:x /home/yueyu/scratch
+setfacl -R -m u:sp35:rwx /home/yueyu/scratch/GBS_workshop
+
+
+setfacl -m u:yushuang:x /home/yueyu 
+setfacl -m u:yushuang:x /home/yueyu/scratch
+setfacl -R -m u:yushuang:rwx /home/yueyu/scratch/GBS_workshop
 
 
 
