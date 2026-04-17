@@ -173,7 +173,7 @@ do
 #!/bin/bash
 #SBATCH --account=def-prof # need to set for your PI's account
 #SBATCH --time=2:00:00
-SBATCH --cpus-per-task=3
+#SBATCH --cpus-per-task=3
 #SBATCH --mem-per-cpu=10G
 
 module load StdEnv/2020
