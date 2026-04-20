@@ -58,43 +58,19 @@ setfacl -R -m u:yushuang:rwx /home/yueyu/scratch/GBS_workshop
 
 # ---- check if access is given
 
-
 getfacl /home/yueyu
 getfacl /home/yueyu/scratch
+getfacl /home/yueyu/scratch/GBS_workshop
 
 
 
-# file: home/yueyu
-# owner: yueyu
-# group: yueyu
-user::rwx
-user:vfett:--x
-group::---
-mask::--x
-other::---
+# ---- remove access
 
+setfacl -x u:vfett /home/yueyu
+setfacl -x u:vfett /home/yueyu/scratch
+setfacl -x u:vfett /home/yueyu/scratch/GBS_workshop
 
-# file: home/yueyu/scratch
-# owner: yueyu
-# group: yueyu
-user::rwx
-user:vfett:--x
-group::---
-mask::--x
-other::---
-
-
-# file: home/yueyu/scratch/GBS_workshop
-# owner: yueyu
-# group: yueyu
-user::rwx
-user:vfett:rwx
-group::r-x
-mask::rwx
-other::---
-
-
-
+# All access removed 20206 April 20
 
 
 
